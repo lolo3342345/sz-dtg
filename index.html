@@ -1,123 +1,732 @@
-<script>
-const menuItems = document.querySelectorAll('.menu-item');
-const contentArea = document.getElementById('content-area');
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baccon Scripter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-const contents = {
-    sobre: {
-        title: 'Scripts',
-        text: 'Confira os melhores scripts para Roblox. Scripts testados e funcionais para diversos jogos.',
-        buttons: [
-            {
-                name: '99 Noites Na Floresta',
-                icon: 'fa-tree',
-                scriptData: {
-                    title: '99 Noites na Floresta',
-                    subtitle: 'SCRIPT PRA 99 NOITES NA FLORESTA MT OP',
-                    code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VWExtra/main/NightsInTheForest.lua"))()'
-                }
-            },
-            {
-                name: 'Roube Um Brainrot',
-                icon: 'fa-brain',
-                scriptData: {
-                    title: 'Roube Um Brainrot',
-                    subtitle: 'SCRIPT PRO ROUBE UM BRAINROT MT OP',
-                    code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/ily123950/Vulkan/refs/heads/main/Tr"))()'
-                }
-            },
-            {
-                name: 'Tiro Cego',
-                icon: 'fa-crosshairs',
-                scriptData: {
-                    title: 'Tiro Cego',
-                    subtitle: 'SCRIPT PRO TIRO CEGO MT OP',
-                    code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/lolo3342345/script-tiro-cego/refs/heads/main/README.md"))()'
-                }
-            },
-            {
-                name: 'Blox Fruits',
-                icon: 'fa-apple-whole',
-                scriptData: {
-                    title: 'Blox Fruits',
-                    subtitle: 'SCRIPT PRO BLOX FRUITS MT OP',
-                    code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()'
-                }
-            },
-            {
-                name: 'Phantom Forces',
-                icon: 'fa-gun',
-                scriptData: {
-                    title: 'Phantom Forces',
-                    subtitle: 'SCRIPT PRO PHANTOM FORCES MT OP',
-                    code: 'loadstring(game:HttpGet("https://pastefy.app/oPUgI36o/raw"))()'
-                }
-            },
-            {
-                name: 'Anime Defenders',
-                icon: 'fa-shield-alt',
-                scriptData: {
-                    title: 'Anime Defenders',
-                    subtitle: 'SCRIPT PRO ANIME DEFENDERS MT OP',
-                    code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/AnimeDefenders/main.lua"))()'
-                }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.9rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .search-btn {
+            padding: 0.9rem 1.8rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #00d4ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Layout principal */
+        .container {
+            display: flex;
+            min-height: calc(100vh - 200px);
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: rgba(15, 20, 40, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 2rem 1rem;
+            border-right: 1px solid rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 200px;
+            height: fit-content;
+            animation: slideInLeft 0.6s ease;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #b0b0b0;
+            font-weight: 500;
+        }
+
+        .menu-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.3);
+            color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: #00d4ff;
+            color: #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            flex: 1;
+            padding: 3rem;
+            animation: slideInRight 0.6s ease;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .content-title {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .content-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #c0c0c0;
+        }
+
+        /* Botões de executores */
+        .executor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .executor-btn {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .executor-btn i {
+            font-size: 2.5rem;
+            color: #00d4ff;
+        }
+
+        .executor-btn:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00d4ff;
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .executor-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        /* Modal de Script */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 20, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 50px rgba(0, 212, 255, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #00d4ff;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .script-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Courier New', monospace;
+            color: #0f0;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
             }
-        ]
-    },
-
-    executores: {
-        title: 'Executores',
-        text: 'Aqui você encontra executores confiáveis.',
-        buttons: [
-            {
-                name: 'Delta',
-                icon: 'fa-bolt',
-                link: 'https://deltaexploits.gg/'
-            },
-            {
-                name: 'BACCON X',
-                icon: 'fa-bacon',
-                link: 'https://lolo3342345.github.io/site-executor/'
-            },
-            {
-                name: 'Bunni',
-                icon: 'fa-rabbit',
-                link: 'https://github.com/peyton-bunni/bunni-download/raw/refs/heads/main/latestbunni.zip'
+            to {
+                opacity: 1;
             }
-        ]
-    }
-};
+        }
 
-menuItems.forEach(item => {
-    item.addEventListener('click', () => {
-        menuItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        const contentKey = item.dataset.content;
-        const content = contents[contentKey];
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
 
-        let buttonsHTML = '<div class="executor-grid">';
-        content.buttons.forEach(btn => {
-            if (btn.scriptData) {
-                buttonsHTML += `
-                <div class="executor-btn" onclick='showModernScript(${JSON.stringify(btn.scriptData)})'>
-                    <i class="fas ${btn.icon}"></i>
-                    <span class="executor-name">${btn.name}</span>
-                </div>`;
-            } else {
-                buttonsHTML += `
-                <a href="${btn.link}" target="_blank" class="executor-btn">
-                    <i class="fas ${btn.icon}"></i>
-                    <span class="executor-name">${btn.name}</span>
-                </a>`;
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+            }
+
+            .main-content {
+                padding: 1.5rem;
+            }
+
+            .content-card {
+                padding: 2rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .content-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll suave */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0e27;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00d4ff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Baccon Scripter</div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Pesquisar pelo título…">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="social-buttons">
+            <a href="https://www.youtube.com/@Baccon_script/" class="social-btn">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+            <a href="https://discord.gg/ZHanGGgyzC" class="social-btn">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <div class="menu-item active" data-content="sobre">Scripts</div>
+            <div class="menu-item" data-content="executores">Executores</div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-card" id="content-area">
+                <h1 class="content-title">Sobre Min</h1>
+                <p class="content-text">sobre Baccon</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Script -->
+    <div class="modal" id="scriptModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Script</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="script-box" id="scriptCode">loadstring(game:HttpGet("https://example.com/script.lua"))()</div>
+            <button class="copy-btn" onclick="copyScript()"><i class="fas fa-copy"></i> Copiar Script</button>
+        </div>
+    </div>
+
+    <script>
+        // Menu lateral interativo
+        const menuItems = document.querySelectorAll('.menu-item');
+        const contentArea = document.getElementById('content-area');
+
+        const contents = {
+            sobre: {
+                title: 'Scripts',
+                text: 'Confira os melhores scripts para Roblox. Scripts testados e funcionais para diversos jogos.',
+                buttons: [
+                    { name: '99 Noites Na Floresta', icon: 'fa-tree', scriptData: { title: '99 Noites na floresta', subtitle: 'SCRIPT PRA 99 NOITES NA FLORESTA MT OP PUXANDO TUDO Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VWExtra/main/NightsInTheForest.lua", true))()' }},
+                    { name: 'Roube Um Brainrot', icon: 'fa-brain', scriptData: { title: 'Roube Um Brainrot (NAMELESS)', subtitle: 'SCRIPT PRO ROUBE UM BRAINROT MT OP  E ESP COMPLETO Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/ily123950/Vulkan/refs/heads/main/Tr"))()' }},
+                    { name: 'Tiro Cego', icon: 'fa-crosshairs', scriptData: { title: 'Tiro Cego', subtitle: 'SCRIPT PRO JOGO TIRO CEGO MT OP COM ANT INVISIBILIDADE COMPLETO Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/lolo3342345/script-tiro-cego/refs/heads/main/README.md"))()' }},
+                    { name: 'Blox Fruits', icon: 'fa-apple-whole', scriptData: { title: 'Blox Fruits', subtitle: 'SCRIPT PRO Blox Fruits MT OP AUTO FARM ESP E MUITO MAIS Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()' }},
+                    { name: 'Legends of speed', icon: 'fa-solid fa-person-running', scriptData: { title: 'Legends of speed', subtitle: 'SCRIPT PRO Legends of speed MT OP TELEPORTA PARA ORBS E HOPES E BEM COMPLETO Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/lolo3342345/Legends-of-speed-2.0/refs/heads/main/README.md"))()' }},
+                    { name: 'Tsuname brainrot', icon: 'fa-water', scriptData: { title: 'Tsuname brainrot', subtitle: 'SCRIPT PRO Tsuname brainrot  MT OP AUTO FARM  Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/kedd063/KdmlScripts/refs/heads/main/EscapeTsunamiForBrainrotsV4"))()' }},
+                    { name: 'Tower Defense', icon: 'fa-tower-observation', scriptData: { title: 'Tower Defense', subtitle: 'SCRIPT PRO TOWER DEFENSE MT OP AUTO PLACE E UPGRADE Script:', code: 'OFF' }},
+                    { name: 'Brookhaven', icon: 'fa-home', scriptData: { title: 'Brookhaven', subtitle: 'SCRIPT PRO BROOKHAVEN MT OP TELEPORT E FLY COMPLETO Script:', code: 'OFF' }},
+                    { name: 'Murder Mystery 2', icon: 'fa-skull', scriptData: { title: 'Murder Mystery 2', subtitle: 'SCRIPT PRO MURDER MYSTERY 2 MT OP ESP E AUTO FARM Script:', code: 'OFF' }},
+                    { name: 'Anime Fighting', icon: 'fa-fist-raised', scriptData: { title: 'Anime Fighting', subtitle: 'SCRIPT PRO ANIME FIGHTING MT OP AUTO TRAIN E QUEST Script:', code: 'OFF' }},
+                    { name: 'Bee Swarm', icon: 'fa-bug', scriptData: { title: 'Bee Swarm Simulator', subtitle: 'SCRIPT PRO BEE SWARM MT OP AUTO FARM E COLLECT HONEY Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Historia00012/HISTORIAHUB/main/BSS%20FREE"))()' }},
+                    { name: 'Da Hood', icon: 'fa-city', scriptData: { title: 'Da Hood', subtitle: 'SCRIPT PRO DA HOOD MT OP AIMBOT E SILENT AIM COMPLETO Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/DaHood/main.lua"))()' }},
+                  
+                ]
+            },
+                     
+            executores: {
+                title: 'Executores',
+                text: 'Aqui você encontra os melhores executores de scripts para Roblox e outras plataformas. Ferramentas confiáveis e atualizadas.',
+                buttons: [
+                    { name: 'Delta', icon: 'fa-bolt', link: 'https://deltaexploits.gg/' },
+                    { name: 'BACCON X', icon: 'fa-bacon', link: 'https://lolo3342345.github.io/site-executor/' },
+                    { name: 'Bunni', icon: 'fa-rabbit', link: 'https://github.com/peyton-bunni/bunni-download/raw/refs/heads/main/latestbunni.zip' },
+                
+                ]
+            
+           
+            }
+        };
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active de todos
+                menuItems.forEach(i => i.classList.remove('active'));
+                // Adiciona active no clicado
+                item.classList.add('active');
+
+                // Atualiza conteúdo
+                const contentKey = item.getAttribute('data-content');
+                const content = contents[contentKey];
+
+                contentArea.style.animation = 'none';
+                setTimeout(() => {
+                    let buttonsHTML = '';
+                    
+                    if (content.buttons) {
+                        buttonsHTML = '<div class="executor-grid">';
+                        content.buttons.forEach(btn => {
+                            if (btn.scriptData) {
+                                buttonsHTML += `
+                                    <div class="executor-btn" onclick='showModernScript(${JSON.stringify(btn.scriptData)})'>
+                                        <i class="fas ${btn.icon}"></i>
+                                        <span class="executor-name">${btn.name}</span>
+                                    </div>
+                                `;
+                            } else if (btn.script) {
+                                buttonsHTML += `
+                                    <div class="executor-btn" onclick="showScript('${btn.name}', \`${btn.script}\`)">
+                                        <i class="fas ${btn.icon}"></i>
+                                        <span class="executor-name">${btn.name}</span>
+                                    </div>
+                                `;
+                            } else {
+                                buttonsHTML += `
+                                    <a href="${btn.link}" target="_blank" class="executor-btn">
+                                        <i class="fas ${btn.icon}"></i>
+                                        <span class="executor-name">${btn.name}</span>
+                                    </a>
+                                `;
+                            }
+                        });
+                        buttonsHTML += '</div>';
+                    }
+                    
+                    contentArea.innerHTML = `
+                        <h1 class="content-title">${content.title}</h1>
+                        <p class="content-text">${content.text}</p>
+                        ${buttonsHTML}
+                    `;
+                    contentArea.style.animation = 'fadeIn 0.5s ease';
+                }, 50);
+            });
+        });
+
+        // Funcionalidade de busca
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                alert(`Buscando por: ${query}`);
             }
         });
-        buttonsHTML += '</div>';
 
-        contentArea.innerHTML = `
-            <h1 class="content-title">${content.title}</h1>
-            <p class="content-text">${content.text}</p>
-            ${buttonsHTML}
-        `;
-    });
-});
-</script>
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+
+        // Funções do Modal
+        function openModal(name, script) {
+            document.getElementById('modalTitle').textContent = name;
+            document.getElementById('scriptCode').textContent = script;
+            document.getElementById('scriptModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('scriptModal').style.display = 'none';
+        }
+
+        function copyScript() {
+            const scriptText = document.getElementById('scriptCode').textContent;
+            navigator.clipboard.writeText(scriptText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Script';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Mostrar script na mesma página com design moderno
+        function showScript(name, script) {
+            contentArea.style.animation = 'none';
+            setTimeout(() => {
+                contentArea.innerHTML = `
+                    <div style="background: #0f0f1a; border-radius: 30px; padding: 40px; box-shadow: 0 0 60px rgba(0, 200, 255, 0.4), 0 0 100px rgba(0, 200, 255, 0.2);">
+                        <button onclick="goBack()" style="background: linear-gradient(90deg, #00d4ff, #0088ff); border: none; border-radius: 15px; padding: 12px 24px; color: white; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 30px; transition: transform 0.2s;">
+                            <i class="fas fa-arrow-left"></i>
+                            Voltar
+                        </button>
+                        
+                        <h1 style="font-size: 48px; font-weight: 700; text-align: center; background: linear-gradient(135deg, #00ffff, #0088ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; line-height: 1.2;">${name}</h1>
+                        
+                        <p style="color: #ffffff; text-align: center; font-size: 16px; font-weight: 400; margin-bottom: 30px; line-height: 1.6;">
+                            SCRIPT PRO ${name.toUpperCase()} MT OP AUTO FARM E INSTANT PROXIMITY PROMPT Script:
+                        </p>
+
+                        <div style="background: #1a1a1a; border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.2);">
+                            <div id="scriptCodeBox" style="font-family: 'Roboto Mono', monospace; color: #00ffff; font-size: 14px; line-height: 1.6; word-wrap: break-word; white-space: pre-wrap; max-height: 300px; overflow-y: auto;">${script}</div>
+                        </div>
+
+                        <button onclick="copyScriptFromPage()" style="background: linear-gradient(90deg, #00d4ff, #0088ff); border: none; border-radius: 15px; padding: 15px 30px; color: white; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; transition: transform 0.2s;">
+                            <i class="fas fa-clipboard"></i>
+                            Copiar Script
+                        </button>
+                    </div>
+                    
+                    <div id="toast" style="position: fixed; bottom: 30px; right: 30px; background: #0f0f1a; color: white; padding: 20px 30px; border-radius: 20px; box-shadow: 0 0 40px rgba(0, 212, 255, 0.5), 0 5px 20px rgba(0, 0, 0, 0.5); display: flex; align-items: center; gap: 15px; font-family: 'Poppins', sans-serif; font-weight: 500; opacity: 0; transform: translateX(400px); transition: all 0.4s ease; z-index: 1000; border: 1px solid rgba(0, 212, 255, 0.3);">
+                        <i class="fas fa-check-circle" style="color: #00ff88; font-size: 24px;"></i>
+                        <span>Script copiado com sucesso!</span>
+                    </div>
+                `;
+                contentArea.style.animation = 'fadeIn 0.5s ease';
+            }, 50);
+        }
+
+        function copyScriptFromPage() {
+            const scriptText = document.getElementById('scriptCodeBox').textContent;
+            navigator.clipboard.writeText(scriptText).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(0)';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(400px)';
+            }, 3000);
+        }
+
+        function goBack() {
+            document.querySelector('[data-content="sobre"]').click();
+        }
+
+        // Função para copiar script do design moderno
+        function copyScriptModern() {
+            const scriptText = document.getElementById('scriptCodeBox').textContent;
+            navigator.clipboard.writeText(scriptText).then(() => {
+                showToastModern();
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+            });
+        }
+
+        function showToastModern() {
+            const toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(0)';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(400px)';
+            }, 3000);
+        }
+
+        // Mostrar script com design moderno
+        function showModernScript(scriptData) {
+            contentArea.style.animation = 'none';
+            setTimeout(() => {
+                contentArea.innerHTML = `
+                    <div style="background: #0f0f1a; border-radius: 30px; padding: 40px; box-shadow: 0 0 60px rgba(0, 200, 255, 0.4), 0 0 100px rgba(0, 200, 255, 0.2);">
+                        <button onclick="goBack()" style="background: linear-gradient(90deg, #00d4ff, #0088ff); border: none; border-radius: 15px; padding: 12px 24px; color: white; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 30px; transition: transform 0.2s;">
+                            <i class="fas fa-arrow-left"></i>
+                            Voltar
+                        </button>
+                        
+                        <h1 style="font-size: 48px; font-weight: 700; text-align: center; background: linear-gradient(135deg, #00ffff, #0088ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; line-height: 1.2;">${scriptData.title}</h1>
+                        
+                        <p style="color: #ffffff; text-align: center; font-size: 16px; font-weight: 400; margin-bottom: 30px; line-height: 1.6;">
+                            ${scriptData.subtitle}
+                        </p>
+
+                        <div style="background: #1a1a1a; border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.2);">
+                            <div id="scriptCodeBox" style="font-family: 'Roboto Mono', monospace; color: #00ffff; font-size: 14px; line-height: 1.6; word-wrap: break-word; white-space: pre-wrap; max-height: 300px; overflow-y: auto;">${scriptData.code}</div>
+                        </div>
+
+                        <button onclick="copyScriptModern()" style="background: linear-gradient(90deg, #00d4ff, #0088ff); border: none; border-radius: 15px; padding: 15px 30px; color: white; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; transition: transform 0.2s;">
+                            <i class="fas fa-clipboard"></i>
+                            Copiar Script
+                        </button>
+                    </div>
+                    
+                    <div id="toast" style="position: fixed; bottom: 30px; right: 30px; background: #0f0f1a; color: white; padding: 20px 30px; border-radius: 20px; box-shadow: 0 0 40px rgba(0, 212, 255, 0.5), 0 5px 20px rgba(0, 0, 0, 0.5); display: flex; align-items: center; gap: 15px; font-family: 'Poppins', sans-serif; font-weight: 500; opacity: 0; transform: translateX(400px); transition: all 0.4s ease; z-index: 1000; border: 1px solid rgba(0, 212, 255, 0.3);">
+                        <i class="fas fa-check-circle" style="color: #00ff88; font-size: 24px;"></i>
+                        <span>Script copiado com sucesso!</span>
+                    </div>
+                `;
+                contentArea.style.animation = 'fadeIn 0.5s ease';
+            }, 50);
+        }
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('scriptModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
