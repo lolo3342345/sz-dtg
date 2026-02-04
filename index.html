@@ -490,7 +490,47 @@
                     { name: 'Anime Fighting', icon: 'fa-fist-raised', scriptData: { title: 'Anime Fighting', subtitle: 'SCRIPT PRO ANIME FIGHTING MT OP AUTO TRAIN E QUEST Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/AnimeFighting/main.lua"))()' }},
                     { name: 'Bee Swarm', icon: 'fa-bug', scriptData: { title: 'Bee Swarm Simulator', subtitle: 'SCRIPT PRO BEE SWARM MT OP AUTO FARM E COLLECT HONEY Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Historia00012/HISTORIAHUB/main/BSS%20FREE"))()' }},
                     { name: 'Da Hood', icon: 'fa-city', scriptData: { title: 'Da Hood', subtitle: 'SCRIPT PRO DA HOOD MT OP AIMBOT E SILENT AIM COMPLETO Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/DaHood/main.lua"))()' }},
-                    { name: 'Phantom Forces', icon: 'fa-gun', scriptData: { title: 'Phantom Forces', subtitle: 'SCRIPT PRO PHANTOM FORCES MT OP AIMBOT E ESP COMPLETO Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/PhantomForces/main.lua"))()' }},
+                    { name: 'Phantom Forces', icon: 'fa-gun', scriptData: { title: 'Phantom Forces', subtitle: 'SCRIPT PRO PHANTOM FORCES MT OP AIMBOT E ESP COMPLETO Script:', code: '-- Join the archon discord to see whats coming in future updates
+-- This script has NO KEY just execute it in phantom forces.
+-- This script is limited, if you would like a more high quality script. Purchase premium.
+
+local source = [[
+loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/bdbb256085cd59f12cf401606ae14b0e.lua"))()
+]]
+
+local executor = string.lower(identifyexecutor and identifyexecutor() or "")
+local threadSource = [[
+    for _, func in getgc(false) do
+        if type(func) == "function" and islclosure(func) and debug.getinfo(func).name == "require" and string.find(debug.getinfo(func).source, "ClientLoader") then
+            ]] .. source .. [[
+            break
+        end
+    end
+]]
+
+local function runSource(runner, getAll)
+    for _, actor in getAll() do
+        runner(actor, threadSource)
+    end
+end
+
+if (string.find(executor, "wave") or string.find(executor, "choco")) then
+    runSource(run_on_actor, get_deleted_actors)
+elseif string.find(executor, "volt") then
+    runSource(run_on_actor, getactors)
+elseif string.find(executor, "potassium") then
+    runSource(run_on_thread, getactorthreads)
+elseif getfflag and (string.lower(tostring(getfflag("DebugRunParallelLuaOnMainThread"))) == "true") then
+    loadstring(source)()
+elseif setfflag then
+    setfflag("DebugRunParallelLuaOnMainThread", "True")
+
+    if queue_on_teleport then
+        queue_on_teleport(source)
+    end
+    
+    game:GetService("TeleportService"):Teleport(game.PlaceId)
+end' }},
                     { name: 'Anime Defenders', icon: 'fa-shield-alt', scriptData: { title: 'Anime Defenders', subtitle: 'SCRIPT PRO ANIME DEFENDERS MT OP AUTO SUMMON E UPGRADE Script:', code: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/AnimeDefenders/main.lua"))()' }}
                 ]
             },
